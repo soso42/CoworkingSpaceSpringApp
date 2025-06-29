@@ -3,7 +3,9 @@ package org.example.service.impl;
 import org.example.config.AppConfig;
 import org.example.service.AppStateService;
 import org.flywaydb.core.Flyway;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AppStateServiceImpl implements AppStateService {
 
     private static String DATABASE;

@@ -6,10 +6,12 @@ import org.example.exceptions.BookingNotAvailableException;
 import org.example.exceptions.BookingNotFoundException;
 import org.example.repository.BookingRepository;
 import org.example.service.BookingService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @AllArgsConstructor
 public class BookingServiceImpl implements BookingService {
 

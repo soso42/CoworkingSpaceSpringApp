@@ -1,16 +1,18 @@
 package org.example.command.impl;
 
+import lombok.AllArgsConstructor;
 import org.example.command.Command;
 import org.example.exceptions.WorkSpaceNotFoundException;
-import org.example.repository.impl.JPAWorkSpaceRepository;
 import org.example.service.WorkSpaceService;
-import org.example.service.impl.WorkSpaceServiceImpl;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
+@AllArgsConstructor
 public class RemoveCommand implements Command {
 
-    private final WorkSpaceService workSpaceService = new WorkSpaceServiceImpl(JPAWorkSpaceRepository.getInstance());
+    private final WorkSpaceService workSpaceService;
     private final Scanner scanner = new Scanner(System.in);
 
     @Override

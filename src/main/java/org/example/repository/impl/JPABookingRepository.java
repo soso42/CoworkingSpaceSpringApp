@@ -6,15 +6,13 @@ import jakarta.persistence.PersistenceException;
 import org.example.entity.Booking;
 import org.example.repository.BookingRepository;
 import org.example.util.HibernateUtil;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class JPABookingRepository implements BookingRepository {
-
-    private static JPABookingRepository instance;
-
-    private JPABookingRepository() {}
 
 
     @Override
@@ -88,14 +86,6 @@ public class JPABookingRepository implements BookingRepository {
         } finally {
             em.close();
         }
-    }
-
-
-    public static JPABookingRepository getInstance() {
-        if  (instance == null) {
-            instance = new JPABookingRepository();
-        }
-        return instance;
     }
 
 }

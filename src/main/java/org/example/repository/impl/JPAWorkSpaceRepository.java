@@ -7,15 +7,13 @@ import org.example.entity.WorkSpace;
 import org.example.exceptions.WorkSpaceNotFoundException;
 import org.example.repository.WorkSpaceRepository;
 import org.example.util.HibernateUtil;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class JPAWorkSpaceRepository implements WorkSpaceRepository {
-
-    private static JPAWorkSpaceRepository instance;
-
-    private JPAWorkSpaceRepository() {}
 
 
     @Override
@@ -114,14 +112,6 @@ public class JPAWorkSpaceRepository implements WorkSpaceRepository {
         } finally {
             em.close();
         }
-    }
-
-
-    public static JPAWorkSpaceRepository getInstance() {
-        if (instance == null) {
-            instance = new JPAWorkSpaceRepository();
-        }
-        return instance;
     }
 
 }
