@@ -7,13 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class AuthServiceImplTest {
 
     private AuthService authService;
 
     @BeforeEach
     void setUp() {
-        this.authService = AuthServiceImpl.getInstance();
+        this.authService = new AuthServiceImpl();
     }
 
 
@@ -27,18 +28,6 @@ class AuthServiceImplTest {
 
         // Then
         assertEquals(accessLevel, authService.getAccessLevel());
-    }
-
-
-    @Test
-    void getInstance() {
-        // Given
-        AuthService s1 = AuthServiceImpl.getInstance();
-        AuthService s2 = AuthServiceImpl.getInstance();
-
-        // When
-        // Then
-        assertEquals(s1, s2);
     }
 
 }

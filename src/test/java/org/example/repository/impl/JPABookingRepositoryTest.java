@@ -15,15 +15,17 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class JPABookingRepositoryTest {
 
     private WorkSpaceRepository workSpaceRepository;
     private BookingRepository bookingRepository;
 
+
     @BeforeEach
     void setUp() {
-        this.workSpaceRepository = JPAWorkSpaceRepository.getInstance();
-        this.bookingRepository = JPABookingRepository.getInstance();
+        this.workSpaceRepository = new JPAWorkSpaceRepository();
+        this.bookingRepository = new JPABookingRepository();
     }
 
 
@@ -116,16 +118,6 @@ class JPABookingRepositoryTest {
     }
 
 
-    @Test
-    void getInstance_happyPath() {
-        // Given
-        // When
-        BookingRepository repository1 = JPABookingRepository.getInstance();
-        BookingRepository repository2 = JPABookingRepository.getInstance();
-
-        // Then
-        assertEquals(repository1, repository2);
-    }
 
 
     private WorkSpace getWorkSpaceFromDB() {
