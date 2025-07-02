@@ -1,9 +1,9 @@
 package org.example.service.impl;
 
-import org.example.entity.Booking;
-import org.example.entity.WorkSpace;
-import org.example.exceptions.BookingNotAvailableException;
-import org.example.exceptions.BookingNotFoundException;
+import org.example.model.entity.Booking;
+import org.example.model.entity.WorkSpace;
+import org.example.model.exceptions.BookingNotAvailableException;
+import org.example.model.exceptions.BookingNotFoundException;
 import org.example.repository.BookingRepository;
 import org.example.repository.impl.JPABookingRepository;
 import org.example.service.BookingService;

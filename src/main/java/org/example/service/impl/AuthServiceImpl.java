@@ -1,6 +1,6 @@
 package org.example.service.impl;
 
-import org.example.enums.AccessLevel;
+import org.example.model.enums.AccessLevel;
 import org.example.service.AuthService;
 import org.springframework.stereotype.Service;
 

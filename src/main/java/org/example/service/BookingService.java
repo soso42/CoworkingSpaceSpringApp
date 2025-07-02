@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.entity.Booking;
+import org.example.model.entity.Booking;
 
 import java.util.List;
 

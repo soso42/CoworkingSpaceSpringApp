@@ -1,8 +1,8 @@
-package org.example.entity;
+package org.example.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.enums.WorkSpaceType;
+import org.example.model.enums.WorkSpaceType;
 
 @Entity
 @Table(name = "workspace")

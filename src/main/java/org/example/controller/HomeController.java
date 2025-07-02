@@ -1,13 +1,14 @@
 package org.example.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@org.springframework.stereotype.Controller
-public class Controller {
+@Controller
+public class HomeController {
 
     @GetMapping("/")
-    public String test(Model model) {
+    public String homepage(Model model) {
         model.addAttribute("name", "Soso");
         return "main";
     }

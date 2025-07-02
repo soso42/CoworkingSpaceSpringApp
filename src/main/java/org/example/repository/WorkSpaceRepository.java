@@ -1,6 +1,6 @@
 package org.example.repository;
 
-import org.example.entity.WorkSpace;
+import org.example.model.entity.WorkSpace;
 
 import java.util.List;
 import java.util.Optional;

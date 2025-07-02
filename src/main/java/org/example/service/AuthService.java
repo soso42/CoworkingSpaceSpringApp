@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.enums.AccessLevel;
+import org.example.model.enums.AccessLevel;
 
 public interface AuthService {
     AccessLevel getAccessLevel();

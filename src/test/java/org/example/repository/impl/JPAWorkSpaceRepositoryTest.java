@@ -1,8 +1,8 @@
 package org.example.repository.impl;
 
-import org.example.entity.WorkSpace;
-import org.example.enums.WorkSpaceType;
-import org.example.exceptions.WorkSpaceNotFoundException;
+import org.example.model.entity.WorkSpace;
+import org.example.model.enums.WorkSpaceType;
+import org.example.model.exceptions.WorkSpaceNotFoundException;
 import org.example.repository.WorkSpaceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

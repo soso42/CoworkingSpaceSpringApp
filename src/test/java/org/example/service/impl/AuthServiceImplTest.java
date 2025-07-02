@@ -1,6 +1,6 @@
 package org.example.service.impl;
 
-import org.example.enums.AccessLevel;
+import org.example.model.enums.AccessLevel;
 import org.example.service.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
