@@ -1,9 +1,9 @@
 package org.example.command.impl;
 
 import org.example.command.Command;
-import org.example.service.AppStateService;
-import org.example.service.impl.AppStateServiceImpl;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ExitCommand implements Command {
 
     @Override

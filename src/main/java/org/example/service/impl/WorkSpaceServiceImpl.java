@@ -5,10 +5,12 @@ import org.example.entity.WorkSpace;
 import org.example.exceptions.WorkSpaceNotFoundException;
 import org.example.repository.WorkSpaceRepository;
 import org.example.service.WorkSpaceService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @AllArgsConstructor
 public class WorkSpaceServiceImpl implements WorkSpaceService {
 

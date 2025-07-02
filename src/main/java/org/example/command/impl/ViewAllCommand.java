@@ -1,15 +1,17 @@
 package org.example.command.impl;
 
+import lombok.AllArgsConstructor;
 import org.example.command.Command;
-import org.example.repository.impl.JPABookingRepository;
 import org.example.service.BookingService;
-import org.example.service.impl.BookingServiceImpl;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
+@AllArgsConstructor
 public class ViewAllCommand implements Command {
 
-    private final BookingService bookingService = new BookingServiceImpl(JPABookingRepository.getInstance());
+    private final BookingService bookingService;
     private final Scanner scanner = new Scanner(System.in);
 
     @Override

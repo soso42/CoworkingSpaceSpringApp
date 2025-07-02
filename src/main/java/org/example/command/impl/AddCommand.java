@@ -1,21 +1,23 @@
 package org.example.command.impl;
 
+import lombok.AllArgsConstructor;
 import org.example.command.Command;
 import org.example.entity.WorkSpace;
 import org.example.enums.WorkSpaceType;
-import org.example.repository.impl.JPAWorkSpaceRepository;
 import org.example.service.WorkSpaceService;
-import org.example.service.impl.WorkSpaceServiceImpl;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Scanner;
 
+@Component
+@AllArgsConstructor
 public class AddCommand implements Command {
 
-    private final WorkSpaceService workSpaceService = new WorkSpaceServiceImpl(JPAWorkSpaceRepository.getInstance());
+    private final WorkSpaceService workSpaceService;
     private final Scanner scanner = new Scanner(System.in);
 
-    Map<Long, WorkSpaceType> types = Map.of(
+    private static final Map<Long, WorkSpaceType> types = Map.of(
             1L, WorkSpaceType.FLEXIBLE_DESK,
             2L, WorkSpaceType.PRIVATE_ROOM,
             3L, WorkSpaceType.CONFERENCE_ROOM

@@ -1,21 +1,24 @@
 package org.example;
 
+import lombok.AllArgsConstructor;
 import org.example.command.Command;
 import org.example.command.CommandFactory;
 import org.example.enums.AccessLevel;
 import org.example.exceptions.UnknownCommandException;
 import org.example.service.AuthService;
 import org.example.service.impl.AppStateServiceImpl;
-import org.example.service.impl.AuthServiceImpl;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Scanner;
 
+@Component
+@AllArgsConstructor
 public class AppFacade {
 
-    private final AuthService authService = AuthServiceImpl.getInstance();
+    private final AuthService authService;
+    private final CommandFactory commandFactory;
     private final Scanner scanner = new Scanner(System.in);
-    private final CommandFactory commandFactory = new CommandFactory();
 
     private final Map<AccessLevel, Runnable> menus = Map.of(
             AccessLevel.ADMIN, this::displayAdminMenu,

@@ -1,22 +1,22 @@
 package org.example.command.impl;
 
+import lombok.AllArgsConstructor;
 import org.example.command.Command;
 import org.example.entity.Booking;
 import org.example.exceptions.BookingNotAvailableException;
-import org.example.repository.impl.JPABookingRepository;
-import org.example.repository.impl.JPAWorkSpaceRepository;
 import org.example.service.BookingService;
 import org.example.service.WorkSpaceService;
-import org.example.service.impl.BookingServiceImpl;
-import org.example.service.impl.WorkSpaceServiceImpl;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
+@Component
+@AllArgsConstructor
 public class BookCommand implements Command {
 
-    private final BookingService bookingService = new BookingServiceImpl(JPABookingRepository.getInstance());
-    private final WorkSpaceService workSpaceService = new WorkSpaceServiceImpl(JPAWorkSpaceRepository.getInstance());
+    private final BookingService bookingService;
+    private final WorkSpaceService workSpaceService;
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
