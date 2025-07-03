@@ -1,25 +1,38 @@
 package org.example.service.impl;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.example.model.dto.BookingCreationDTO;
 import org.example.model.entity.Booking;
+import org.example.model.entity.WorkSpace;
 import org.example.model.exceptions.BookingNotAvailableException;
 import org.example.model.exceptions.BookingNotFoundException;
+import org.example.model.exceptions.WorkSpaceNotFoundException;
 import org.example.repository.BookingRepository;
 import org.example.service.BookingService;
+import org.example.service.WorkSpaceService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
+    private final WorkSpaceService workSpaceService;
+    private final ModelMapper modelMapper;
 
 
     @Override
-    public void book(Booking booking) {
+    public void book(BookingCreationDTO dto) {
+        Booking booking = modelMapper.map(dto, Booking.class);
+        booking.setId(null);
+        WorkSpace workSpace = workSpaceService.findById(dto.getWorkSpaceId())
+                .orElseThrow(() -> new WorkSpaceNotFoundException("WorkSpace with the id " + dto.getWorkSpaceId() + " does not exist"));
+        booking.setWorkSpace(workSpace);
+
         if (bookingOverlapsOthers(booking)) {
             throw new BookingNotAvailableException("Booking overlaps another booking");
         }

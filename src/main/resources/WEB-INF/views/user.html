@@ -13,9 +13,46 @@
   <div class="row mt-5">
     <div class="col-auto mt-5">
       <h1 class="">User panel</h1>
-      <p class="text-10 mt-3 mb-4">...</p>
-
     </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row mt-5 d-flex flex-column g-5">
+
+    <div class="col-3 mb-5">
+      <form th:action="@{/user/make-booking}" method="post">
+        <div class="form-group">
+          <h5 class="mb-4">Make booking:</h5>
+
+          <input class="form-control mb-2" type="number" name="workSpaceId" placeholder="WorkSpace id">
+          <input class="form-control mb-2" type="date" name="startDate" placeholder="Start date">
+          <input class="form-control mb-2" type="date" name="endDate" placeholder="End date">
+
+          <button class="btn btn-primary" type="submit">Make booking</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-3 mb-5">
+      <form th:action="@{/user/cancel-booking}" method="post">
+        <div class="form-group">
+          <h5 class="mb-4">Cancel booking:</h5>
+          <input class="form-control mb-2" type="text" name="id" placeholder="Id...">
+          <button class="btn btn-primary" type="submit">Cancel booking</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-3 mb-5">
+      <form th:action="@{/user/all-bookings}" method="get">
+        <div class="form-group">
+          <h5 class="mb-4">View all</h5>
+          <button class="btn btn-primary" type="submit">View all</button>
+        </div>
+      </form>
+    </div>
+
   </div>
 </div>
 

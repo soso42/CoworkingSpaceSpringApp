@@ -12,7 +12,7 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-auto mt-5">
-      <h1 class="">Admin panel</h1>
+      <h1 class="">Bookings:</h1>
     </div>
   </div>
 </div>
@@ -24,29 +24,17 @@
       <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">WorkSpace id</th>
+        <th scope="col">Start date</th>
+        <th scope="col">End date</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
+      <tr th:each="booking : ${bookings}">
+        <th scope="row" th:text="${booking.id}"></th>
+        <td th:text="${booking.workSpace.getId()}"></td>
+        <td th:text="${booking.startDate}"></td>
+        <td th:text="${booking.endDate}"></td>
       </tr>
       </tbody>
     </table>
@@ -58,7 +46,7 @@
   <div class="row mt-5">
     <div class="col-auto">
       <p class="text-10 mt-3 mb-4">
-        <a href="#" th:href="@{/admin/}">Back</a>
+        <a href="#" th:href="@{/user/}">Back</a>
       </p>
     </div>
   </div>
