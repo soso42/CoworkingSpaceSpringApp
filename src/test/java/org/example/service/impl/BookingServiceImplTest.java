@@ -3,15 +3,18 @@ package org.example.service.impl;
 import org.example.model.dto.BookingCreationDTO;
 import org.example.model.entity.Booking;
 import org.example.model.entity.WorkSpace;
+import org.example.model.exceptions.BookingNotAvailableException;
 import org.example.model.exceptions.BookingNotFoundException;
 import org.example.repository.BookingRepository;
-import org.example.repository.impl.JPABookingRepository;
-import org.example.repository.impl.JPAWorkSpaceRepository;
+import org.example.repository.WorkSpaceRepository;
 import org.example.service.BookingService;
 import org.example.service.WorkSpaceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,17 +24,27 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
+@SpringBootTest
 class BookingServiceImplTest {
 
+    @Mock
     private BookingRepository bookingRepository;
+
+    @Mock
+    private WorkSpaceRepository workSpaceRepository;
+
+    private WorkSpaceService workSpaceService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
     private BookingService bookingService;
 
 
     @BeforeEach
     void setUp() {
-        this.bookingRepository = mock(JPABookingRepository.class);
-        WorkSpaceService workSpaceService = new WorkSpaceServiceImpl(new JPAWorkSpaceRepository(), new ModelMapper());
-        this.bookingService = new BookingServiceImpl(bookingRepository, workSpaceService, new ModelMapper());
+        this.workSpaceService = new WorkSpaceServiceImpl(workSpaceRepository, modelMapper);
+        this.bookingService = new BookingServiceImpl(bookingRepository, workSpaceService, modelMapper);
     }
 
 
@@ -46,6 +59,7 @@ class BookingServiceImplTest {
                 .endDate(LocalDate.parse("2027-02-02"))
                 .build();
         when(bookingRepository.findAll()).thenReturn(List.of(bookingInDb));
+        when(workSpaceRepository.findById(anyLong())).thenReturn(Optional.of(workSpace));
         BookingCreationDTO dto = new BookingCreationDTO();
         dto.setWorkSpaceId(workSpace.getId());
         dto.setStartDate(LocalDate.parse("2026-01-01"));
@@ -68,15 +82,15 @@ class BookingServiceImplTest {
                 .endDate(LocalDate.parse("2027-02-02"))
                 .build();
         when(bookingRepository.findAll()).thenReturn(List.of(bookingInDb));
-        Booking newBooking = Booking.builder()
-                .workSpace(workSpace)
-                .startDate(LocalDate.parse("2027-01-01"))
-                .endDate(LocalDate.parse("2027-02-02"))
-                .build();
+        when(workSpaceRepository.findById(anyLong())).thenReturn(Optional.of(workSpace));
+        BookingCreationDTO dto = new BookingCreationDTO();
+        dto.setWorkSpaceId(workSpace.getId());
+        dto.setStartDate(LocalDate.parse("2027-01-01"));
+        dto.setEndDate(LocalDate.parse("2027-02-02"));
 
         // When
         // Then
-//        assertThrows(BookingNotAvailableException.class, () -> bookingService.book(newBooking));
+        assertThrows(BookingNotAvailableException.class, () -> bookingService.book(dto));
         verify(bookingRepository, times(1)).findAll();
     }
 

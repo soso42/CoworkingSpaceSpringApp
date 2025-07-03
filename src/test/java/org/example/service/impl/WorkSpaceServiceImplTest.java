@@ -1,54 +1,56 @@
 package org.example.service.impl;
 
+import org.example.model.dto.WorkSpaceCreationDTO;
 import org.example.model.entity.WorkSpace;
 import org.example.model.enums.WorkSpaceType;
 import org.example.model.exceptions.WorkSpaceNotFoundException;
 import org.example.repository.WorkSpaceRepository;
-import org.example.repository.impl.JPAWorkSpaceRepository;
-import org.example.service.WorkSpaceService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
+@SpringBootTest
 class WorkSpaceServiceImplTest {
 
+    @Mock
     private WorkSpaceRepository repository;
-    private WorkSpaceService workSpaceService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
+    private WorkSpaceServiceImpl workSpaceService;
 
     @BeforeEach
     void setUp() {
-        this.repository = mock(JPAWorkSpaceRepository.class);
-        this.workSpaceService = new WorkSpaceServiceImpl(repository, new ModelMapper());
+        this.workSpaceService = new WorkSpaceServiceImpl(this.repository, this.modelMapper);
     }
 
 
-    @Disabled
     @Test
     void save() {
         // Given
         WorkSpaceType type = WorkSpaceType.FLEXIBLE_DESK;
         Integer price = 999;
         Boolean availability = true;
-        WorkSpace workSpace = new WorkSpace(null, type, price, availability);
         WorkSpace savedWorkSpace = new WorkSpace(1L, type, price, availability);
-        when(repository.save(workSpace)).thenReturn(savedWorkSpace);
+        when(repository.save(any(WorkSpace.class))).thenReturn(savedWorkSpace);
 
         // When
-//        WorkSpace result = workSpaceService.save(workSpace);
-        WorkSpace result = null;
+        WorkSpace result = workSpaceService.save(new WorkSpaceCreationDTO(type, price, availability));
 
         // Then
         assertAll(

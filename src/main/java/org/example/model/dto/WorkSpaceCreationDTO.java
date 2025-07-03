@@ -1,10 +1,12 @@
 package org.example.model.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.model.enums.WorkSpaceType;
 
 @Data
+@AllArgsConstructor
 public class WorkSpaceCreationDTO {
 
     @NotNull

@@ -1,32 +1,31 @@
 package org.example.repository.impl;
 
+import jakarta.transaction.Transactional;
 import org.example.model.entity.Booking;
 import org.example.model.entity.WorkSpace;
 import org.example.model.enums.WorkSpaceType;
 import org.example.repository.BookingRepository;
 import org.example.repository.WorkSpaceRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Transactional
+@SpringBootTest
+class BookingRepositoryTest {
 
-class JPABookingRepositoryTest {
-
-    private WorkSpaceRepository workSpaceRepository;
+    @Autowired
     private BookingRepository bookingRepository;
 
-
-    @BeforeEach
-    void setUp() {
-        this.workSpaceRepository = new JPAWorkSpaceRepository();
-        this.bookingRepository = new JPABookingRepository();
-    }
+    @Autowired
+    private WorkSpaceRepository workSpaceRepository;
 
 
     @Test
