@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.example.model.dto.BookingCreationDTO;
 import org.example.model.entity.Booking;
@@ -9,6 +11,7 @@ import org.example.model.exceptions.WorkSpaceNotFoundException;
 import org.example.service.BookingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +30,11 @@ public class UserController {
     }
 
     @PostMapping("/make-booking")
-    public String makeBooking(@ModelAttribute BookingCreationDTO dto, Model model) {
+    public String makeBooking(@ModelAttribute @Valid BookingCreationDTO dto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("error", result.getAllErrors());
+            return "error";
+        }
         try {
             bookingService.book(dto);
         } catch (WorkSpaceNotFoundException e) {
@@ -41,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/cancel-booking")
-    public String cancelBooking(@RequestParam("id") Long id, Model model) {
+    public String cancelBooking(@RequestParam("id") @NotNull Long id, Model model) {
         try {
             bookingService.cancelBooking(id);
         } catch (BookingNotFoundException e) {

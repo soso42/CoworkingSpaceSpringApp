@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.example.model.dto.WorkSpaceCreationDTO;
 import org.example.model.entity.WorkSpace;
@@ -7,6 +8,8 @@ import org.example.model.exceptions.WorkSpaceNotFoundException;
 import org.example.service.WorkSpaceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,13 +28,17 @@ public class AdminController {
     }
 
     @PostMapping("/add-workspace")
-    public String addWorkSpace(@ModelAttribute("dto") WorkSpaceCreationDTO dto) {
+    public String addWorkSpace(@ModelAttribute("dto") @Validated WorkSpaceCreationDTO dto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("error", result.getAllErrors());
+            return "error";
+        }
         workSpaceService.save(dto);
         return "redirect:/admin/";
     }
 
     @PostMapping("/remove-workspace")
-    public String removeWorkSpace(@RequestParam("id") Long id, Model model) {
+    public String removeWorkSpace(@RequestParam("id") @NotNull Long id, Model model) {
         try {
             workSpaceService.removeWorkSpace(id);
         } catch (WorkSpaceNotFoundException e) {

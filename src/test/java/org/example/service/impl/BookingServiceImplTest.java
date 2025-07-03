@@ -3,7 +3,6 @@ package org.example.service.impl;
 import org.example.model.dto.BookingCreationDTO;
 import org.example.model.entity.Booking;
 import org.example.model.entity.WorkSpace;
-import org.example.model.exceptions.BookingNotAvailableException;
 import org.example.model.exceptions.BookingNotFoundException;
 import org.example.repository.BookingRepository;
 import org.example.repository.impl.JPABookingRepository;
@@ -47,15 +46,14 @@ class BookingServiceImplTest {
                 .endDate(LocalDate.parse("2027-02-02"))
                 .build();
         when(bookingRepository.findAll()).thenReturn(List.of(bookingInDb));
-        Booking newBooking = Booking.builder()
-                .workSpace(workSpace)
-                .startDate(LocalDate.parse("2026-01-01"))
-                .endDate(LocalDate.parse("2026-02-02"))
-                .build();
+        BookingCreationDTO dto = new BookingCreationDTO();
+        dto.setWorkSpaceId(workSpace.getId());
+        dto.setStartDate(LocalDate.parse("2026-01-01"));
+        dto.setEndDate(LocalDate.parse("2026-02-02"));
 
         // When
         // Then
-//        assertDoesNotThrow(() -> bookingService.book(newBooking));
+        assertDoesNotThrow(() -> bookingService.book(dto));
         verify(bookingRepository, times(1)).findAll();
     }
 
