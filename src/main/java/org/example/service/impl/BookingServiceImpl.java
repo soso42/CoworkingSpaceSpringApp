@@ -1,7 +1,7 @@
 package org.example.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.model.dto.BookingCreationDTO;
+import org.example.model.dto.booking.BookingCreationDTO;
 import org.example.model.entity.Booking;
 import org.example.model.entity.WorkSpace;
 import org.example.model.exceptions.BookingNotAvailableException;

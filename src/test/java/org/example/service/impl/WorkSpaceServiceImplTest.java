@@ -1,6 +1,6 @@
 package org.example.service.impl;
 
-import org.example.model.dto.WorkSpaceCreationDTO;
+import org.example.model.dto.workspace.WorkSpaceCreateDTO;
 import org.example.model.entity.WorkSpace;
 import org.example.model.enums.WorkSpaceType;
 import org.example.model.exceptions.WorkSpaceNotFoundException;
@@ -50,7 +50,7 @@ class WorkSpaceServiceImplTest {
         when(repository.save(any(WorkSpace.class))).thenReturn(savedWorkSpace);
 
         // When
-        WorkSpace result = workSpaceService.save(new WorkSpaceCreationDTO(type, price, availability));
+        WorkSpace result = workSpaceService.save(new WorkSpaceCreateDTO(type, price, availability));
 
         // Then
         assertAll(

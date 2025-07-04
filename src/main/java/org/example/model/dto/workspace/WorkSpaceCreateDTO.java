@@ -1,13 +1,15 @@
-package org.example.model.dto;
+package org.example.model.dto.workspace;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.model.enums.WorkSpaceType;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
-public class WorkSpaceCreationDTO {
+public class WorkSpaceCreateDTO {
 
     @NotNull
     private WorkSpaceType type;

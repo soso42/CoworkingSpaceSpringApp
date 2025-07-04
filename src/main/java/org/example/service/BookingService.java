@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.model.dto.BookingCreationDTO;
+import org.example.model.dto.booking.BookingCreationDTO;
 import org.example.model.entity.Booking;
 
 import java.util.List;

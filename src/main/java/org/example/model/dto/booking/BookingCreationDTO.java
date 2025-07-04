@@ -1,11 +1,15 @@
-package org.example.model.dto;
+package org.example.model.dto.booking;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookingCreationDTO {
 
     @NotNull
