@@ -1,24 +1,28 @@
 package org.example.service.impl;
 
-import lombok.AllArgsConstructor;
-import org.example.entity.WorkSpace;
-import org.example.exceptions.WorkSpaceNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.example.model.dto.WorkSpaceCreationDTO;
+import org.example.model.entity.WorkSpace;
+import org.example.model.exceptions.WorkSpaceNotFoundException;
 import org.example.repository.WorkSpaceRepository;
 import org.example.service.WorkSpaceService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WorkSpaceServiceImpl implements WorkSpaceService {
 
     private final WorkSpaceRepository repository;
+    private final ModelMapper modelMapper;
 
 
     @Override
-    public WorkSpace save(WorkSpace workSpace) {
+    public WorkSpace save(WorkSpaceCreationDTO dto) {
+        WorkSpace workSpace = modelMapper.map(dto, WorkSpace.class);
         return repository.save(workSpace);
     }
 

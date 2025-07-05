@@ -1,8 +1,8 @@
 package org.example.repository.impl;
 
-import org.example.entity.Booking;
-import org.example.entity.WorkSpace;
-import org.example.enums.WorkSpaceType;
+import org.example.model.entity.Booking;
+import org.example.model.entity.WorkSpace;
+import org.example.model.enums.WorkSpaceType;
 import org.example.repository.BookingRepository;
 import org.example.repository.WorkSpaceRepository;
 import org.junit.jupiter.api.BeforeEach;

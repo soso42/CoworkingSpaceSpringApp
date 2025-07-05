@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <title>Workspaces:</title>
+</head>
+<body>
+
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-auto mt-5">
+      <h1 class="">Workspaces: </h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row mt-5">
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Type</th>
+        <th scope="col">Price</th>
+        <th scope="col">Available</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="workSpace : ${workSpaces}">
+        <th scope="row" th:text="${workSpace.id}"></th>
+        <td th:text="${workSpace.type}"></td>
+        <td th:text="${workSpace.price}"></td>
+        <td th:text="${workSpace.available}"></td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-auto">
+      <p class="text-10 mt-3 mb-4">
+        <a href="#" th:href="@{/admin/}">Back</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+</body>
+</html>

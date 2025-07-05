@@ -3,7 +3,7 @@ package org.example.repository.impl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
-import org.example.entity.Booking;
+import org.example.model.entity.Booking;
 import org.example.repository.BookingRepository;
 import org.example.util.HibernateUtil;
 import org.springframework.stereotype.Repository;
