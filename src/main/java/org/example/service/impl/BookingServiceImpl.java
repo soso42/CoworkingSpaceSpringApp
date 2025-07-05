@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.model.dto.booking.BookingCreationDTO;
+import org.example.model.dto.booking.BookingDTO;
 import org.example.model.entity.Booking;
 import org.example.model.entity.WorkSpace;
 import org.example.model.exceptions.BookingNotAvailableException;
@@ -52,6 +53,19 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Booking> findAll() {
         return bookingRepository.findAll();
+    }
+
+    @Override
+    public List<BookingDTO> findAllDTO() {
+        return findAll().stream()
+                .map(this::mapBookingToDTO)
+                .toList();
+    }
+
+    private BookingDTO mapBookingToDTO(Booking booking) {
+        BookingDTO dto = modelMapper.map(booking, BookingDTO.class);
+        dto.setWorkSpaceId(booking.getWorkSpace().getId());
+        return dto;
     }
 
     @Override

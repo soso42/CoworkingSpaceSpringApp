@@ -1,11 +1,9 @@
 package org.example.controller;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.example.model.dto.workspace.WorkSpaceCreateDTO;
 import org.example.model.dto.workspace.WorkSpaceDTO;
 import org.example.model.dto.workspace.WorkSpaceUpdateDTO;
-import org.example.model.entity.WorkSpace;
 import org.example.model.exceptions.WorkSpaceNotFoundException;
 import org.example.service.WorkSpaceService;
 import org.springframework.http.HttpStatus;
