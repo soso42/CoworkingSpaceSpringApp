@@ -44,7 +44,7 @@ public class WorkSpaceController {
         return workSpaceService.findAll();
     }
 
-    @PatchMapping("")
+    @PutMapping("")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public WorkSpaceDTO update(@Validated WorkSpaceUpdateDTO dto) {
         try {

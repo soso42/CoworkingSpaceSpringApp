@@ -3,6 +3,7 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.model.dto.booking.BookingCreationDTO;
 import org.example.model.dto.booking.BookingDTO;
+import org.example.model.dto.booking.BookingUpdateDTO;
 import org.example.model.exceptions.BookingNotAvailableException;
 import org.example.model.exceptions.BookingNotFoundException;
 import org.example.model.exceptions.WorkSpaceNotFoundException;
@@ -40,6 +41,18 @@ public class BookingController {
     @ResponseStatus(HttpStatus.OK)
     public List<BookingDTO> getAllBookings() {
         return bookingService.findAllDTO();
+    }
+
+    @PutMapping("")
+    public ResponseEntity<?> updateBooking(@RequestBody @Validated BookingUpdateDTO dto) {
+        try {
+            BookingDTO booking = bookingService.updateBooking(dto);
+            return new ResponseEntity<>(booking, HttpStatus.OK);
+        } catch (BookingNotFoundException e) {
+            return new ResponseEntity<>(Map.of("error", "Booking not found"), HttpStatus.BAD_REQUEST);
+        } catch (WorkSpaceNotFoundException e) {
+            return new ResponseEntity<>(Map.of("error", "Workspace not found"), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/{id}")

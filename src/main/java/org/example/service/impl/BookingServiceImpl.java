@@ -3,6 +3,7 @@ package org.example.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.model.dto.booking.BookingCreationDTO;
 import org.example.model.dto.booking.BookingDTO;
+import org.example.model.dto.booking.BookingUpdateDTO;
 import org.example.model.entity.Booking;
 import org.example.model.entity.WorkSpace;
 import org.example.model.exceptions.BookingNotAvailableException;
@@ -50,6 +51,7 @@ public class BookingServiceImpl implements BookingService {
         return !b1.getStartDate().isAfter(b2.getEndDate()) && !b1.getEndDate().isBefore(b2.getStartDate());
     }
 
+
     @Override
     public List<Booking> findAll() {
         return bookingRepository.findAll();
@@ -67,6 +69,20 @@ public class BookingServiceImpl implements BookingService {
         dto.setWorkSpaceId(booking.getWorkSpace().getId());
         return dto;
     }
+
+
+    @Override
+    public BookingDTO updateBooking(BookingUpdateDTO dto) {
+        Booking booking = bookingRepository.findById(dto.getId())
+                .orElseThrow(() -> new BookingNotFoundException("Booking with the id " + dto.getId() + " does not exist"));
+        WorkSpace workSpace = workSpaceService.findById(dto.getWorkSpaceId())
+                .orElseThrow(() -> new WorkSpaceNotFoundException("WorkSpace with the id " + dto.getWorkSpaceId() + " does not exist"));
+        modelMapper.map(dto, booking);
+        booking.setWorkSpace(workSpace);
+        bookingRepository.save(booking);
+        return mapBookingToDTO(booking);
+    }
+
 
     @Override
     public void cancelBooking(Long id) {
