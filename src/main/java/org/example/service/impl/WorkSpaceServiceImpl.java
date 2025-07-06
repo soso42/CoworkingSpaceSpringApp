@@ -1,6 +1,5 @@
 package org.example.service.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.model.dto.workspace.WorkSpaceCreateDTO;
 import org.example.model.dto.workspace.WorkSpaceDTO;
@@ -11,6 +10,7 @@ import org.example.repository.WorkSpaceRepository;
 import org.example.service.WorkSpaceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

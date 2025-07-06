@@ -3,7 +3,6 @@ package org.example.repository.impl;
 import jakarta.transaction.Transactional;
 import org.example.model.entity.WorkSpace;
 import org.example.model.enums.WorkSpaceType;
-import org.example.model.exceptions.WorkSpaceNotFoundException;
 import org.example.repository.WorkSpaceRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -39,52 +38,6 @@ class WorkSpaceRepositoryTest {
                 () -> assertEquals(workSpace.getAvailable(), savedWorkSpace.getAvailable())
         );
     }
-
-//    @Test
-//    void update_workspace_happyPath() {
-//        // Given
-//        WorkSpace workSpace = WorkSpace.builder()
-//                .type(WorkSpaceType.CONFERENCE_ROOM)
-//                .price(113)
-//                .available(false)
-//                .build();
-//        Long id = repository.save(workSpace).getId();
-//        WorkSpaceType type = WorkSpaceType.FLEXIBLE_DESK;
-//        Integer price = 999;
-//        Boolean available = true;
-//
-//        // When
-//        workSpace.setId(id);
-//        workSpace.setType(type);
-//        workSpace.setPrice(price);
-//        workSpace.setAvailable(available);
-//        WorkSpace updatedWorkSpace = repository.update(workSpace);
-//
-//        // Then
-//        assertAll(
-//                () -> assertEquals(type, updatedWorkSpace.getType()),
-//                () -> assertEquals(price, updatedWorkSpace.getPrice()),
-//                () -> assertEquals(available, updatedWorkSpace.getAvailable())
-//        );
-//    }
-
-//    @ParameterizedTest
-//    @ValueSource(longs = {Long.MAX_VALUE, Long.MAX_VALUE})
-//    void update_workspace_whenWorkSpaceNotExists_throwsException(Long id) {
-//        // Given
-//        WorkSpace workSpace = WorkSpace.builder()
-//                .id(id)
-//                .type(WorkSpaceType.FLEXIBLE_DESK)
-//                .price(113)
-//                .available(false)
-//                .build();
-//
-//        // When
-//        // Then
-//        assertThrows(WorkSpaceNotFoundException.class, () -> {
-//            repository.update(workSpace);
-//        });
-//    }
 
     @Test
     void findById_happyPath() {

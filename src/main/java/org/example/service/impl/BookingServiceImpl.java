@@ -14,6 +14,7 @@ import org.example.service.BookingService;
 import org.example.service.WorkSpaceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -71,6 +72,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
+    @Transactional
     @Override
     public BookingDTO updateBooking(BookingUpdateDTO dto) {
         Booking booking = bookingRepository.findById(dto.getId())
