@@ -14,6 +14,6 @@ public interface WorkSpaceService {
     List<WorkSpaceDTO> findAll();
     Optional<WorkSpace> findById(Long id);
     Optional<WorkSpaceDTO> findDtoById(Long id);
-    WorkSpaceDTO update(WorkSpaceUpdateDTO dto);
+    WorkSpaceDTO update(Long id, WorkSpaceUpdateDTO dto);
     void removeWorkSpace(Long id);
 }

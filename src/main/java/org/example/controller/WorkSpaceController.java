@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/workspace")
+@RequestMapping("/workspaces")
 @RequiredArgsConstructor
 public class WorkSpaceController {
 
@@ -44,11 +44,11 @@ public class WorkSpaceController {
         return workSpaceService.findAll();
     }
 
-    @PutMapping("")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public WorkSpaceDTO update(@Validated WorkSpaceUpdateDTO dto) {
+    public WorkSpaceDTO update(@Validated WorkSpaceUpdateDTO dto, @PathVariable("id") Long id) {
         try {
-            return workSpaceService.update(dto);
+            return workSpaceService.update(id, dto);
         } catch (WorkSpaceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

@@ -165,15 +165,14 @@ class WorkSpaceServiceImplTest {
         WorkSpaceType updatedType = WorkSpaceType.CONFERENCE_ROOM;
         Integer updatedPrice = 123;
         Boolean updatedAvailability = false;
-        WorkSpaceUpdateDTO dto = new WorkSpaceUpdateDTO(originalId,
-                                                        updatedType,
+        WorkSpaceUpdateDTO dto = new WorkSpaceUpdateDTO(updatedType,
                                                         updatedPrice,
                                                         updatedAvailability);
         when(repository.save(any(WorkSpace.class))).thenReturn(new WorkSpace(originalId,
                 updatedType, updatedPrice, updatedAvailability));
 
         // When
-        WorkSpaceDTO result = workSpaceService.update(dto);
+        WorkSpaceDTO result = workSpaceService.update(1L, dto);
 
         // Then
         assertAll(
@@ -193,7 +192,7 @@ class WorkSpaceServiceImplTest {
         // When
         // Then
         assertThrows(WorkSpaceNotFoundException.class, () -> {
-            workSpaceService.update(dto);
+            workSpaceService.update(1L, dto);
         });
     }
 

@@ -74,13 +74,19 @@ public class BookingServiceImpl implements BookingService {
 
     @Transactional
     @Override
-    public BookingDTO updateBooking(BookingUpdateDTO dto) {
-        Booking booking = bookingRepository.findById(dto.getId())
-                .orElseThrow(() -> new BookingNotFoundException("Booking with the id " + dto.getId() + " does not exist"));
-        WorkSpace workSpace = workSpaceService.findById(dto.getWorkSpaceId())
-                .orElseThrow(() -> new WorkSpaceNotFoundException("WorkSpace with the id " + dto.getWorkSpaceId() + " does not exist"));
-        modelMapper.map(dto, booking);
-        booking.setWorkSpace(workSpace);
+    public BookingDTO updateBooking(Long id, BookingUpdateDTO dto) {
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new BookingNotFoundException("Booking with the id " + id + " does not exist"));
+
+        if (dto.getWorkSpaceId() != null) {
+            WorkSpace workSpace = workSpaceService.findById(dto.getWorkSpaceId())
+                    .orElseThrow(() -> new WorkSpaceNotFoundException("WorkSpace with the id " + dto.getWorkSpaceId() + " does not exist"));
+            booking.setWorkSpace(workSpace);
+        }
+
+        Optional.ofNullable(dto.getStartDate()).ifPresent(booking::setStartDate);
+        Optional.ofNullable(dto.getEndDate()).ifPresent(booking::setEndDate);
+
         bookingRepository.save(booking);
         return mapBookingToDTO(booking);
     }

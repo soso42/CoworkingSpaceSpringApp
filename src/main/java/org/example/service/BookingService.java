@@ -11,6 +11,6 @@ public interface BookingService {
     void book(BookingCreationDTO dto);
     List<Booking> findAll();
     List<BookingDTO> findAllDTO();
-    BookingDTO updateBooking(BookingUpdateDTO booking);
+    BookingDTO updateBooking(Long id, BookingUpdateDTO booking);
     void cancelBooking(Long id);
 }

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("/bookings")
 @RequiredArgsConstructor
 public class BookingController {
 
@@ -43,10 +43,10 @@ public class BookingController {
         return bookingService.findAllDTO();
     }
 
-    @PutMapping("")
-    public ResponseEntity<?> updateBooking(@RequestBody @Validated BookingUpdateDTO dto) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateBooking(@RequestBody BookingUpdateDTO dto, @PathVariable("id") Long id) {
         try {
-            BookingDTO booking = bookingService.updateBooking(dto);
+            BookingDTO booking = bookingService.updateBooking(id, dto);
             return new ResponseEntity<>(booking, HttpStatus.OK);
         } catch (BookingNotFoundException e) {
             return new ResponseEntity<>(Map.of("error", "Booking not found"), HttpStatus.BAD_REQUEST);
@@ -63,6 +63,5 @@ public class BookingController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found");
         }
     }
-
 
 }

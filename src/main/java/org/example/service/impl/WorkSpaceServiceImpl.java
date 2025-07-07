@@ -57,13 +57,16 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 
     @Transactional
     @Override
-    public WorkSpaceDTO update(WorkSpaceUpdateDTO dto) {
-        Optional<WorkSpace> optWorkSpace = repository.findById(dto.getId());
+    public WorkSpaceDTO update(Long id, WorkSpaceUpdateDTO dto) {
+        Optional<WorkSpace> optWorkSpace = repository.findById(id);
         if (optWorkSpace.isEmpty()) {
-            throw new WorkSpaceNotFoundException("WorkSpace not found with the Id "  + dto.getId());
+            throw new WorkSpaceNotFoundException("WorkSpace not found with the Id "  + id);
         }
         WorkSpace workSpace = optWorkSpace.get();
-        modelMapper.map(dto, workSpace);
+
+        Optional.ofNullable(dto.getType()).ifPresent(workSpace::setType);
+        Optional.ofNullable(dto.getPrice()).ifPresent(workSpace::setPrice);
+        Optional.ofNullable(dto.getAvailable()).ifPresent(workSpace::setAvailable);
 
         WorkSpace updated = repository.save(workSpace);
         return modelMapper.map(updated, WorkSpaceDTO.class);

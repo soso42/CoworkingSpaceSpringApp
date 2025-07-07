@@ -139,7 +139,6 @@ class BookingServiceImplTest {
                 .endDate(LocalDate.parse("2027-02-02"))
                 .build();
         BookingUpdateDTO dto = new BookingUpdateDTO();
-        dto.setId(1L);
         dto.setWorkSpaceId(workSpace.getId());
         dto.setStartDate(LocalDate.parse("2028-01-01"));
         dto.setEndDate(LocalDate.parse("2028-02-02"));
@@ -148,11 +147,10 @@ class BookingServiceImplTest {
         when(workSpaceRepository.findById(anyLong())).thenReturn(Optional.of(workSpace));
 
         // When
-        BookingDTO result = bookingService.updateBooking(dto);
+        BookingDTO result = bookingService.updateBooking(1L, dto);
 
         // Then
         assertAll(
-                () -> assertEquals(result.getId(), dto.getId()),
                 () -> assertEquals(result.getWorkSpaceId(), dto.getWorkSpaceId()),
                 () -> assertEquals(result.getStartDate(), dto.getStartDate()),
                 () -> assertEquals(result.getEndDate(), dto.getEndDate())
@@ -170,21 +168,21 @@ class BookingServiceImplTest {
 
         // When
         // Then
-        assertThrows(BookingNotFoundException.class, () -> bookingService.updateBooking(dto));
+        assertThrows(BookingNotFoundException.class, () -> bookingService.updateBooking(22L, dto));
     }
 
     @Test
     public void updateBooking_whenWorkSpaceIdNotFound_throwsException() {
         // Given
         BookingUpdateDTO dto = new BookingUpdateDTO();
-        dto.setId(22L);
+        dto.setWorkSpaceId(22L);
         dto.setStartDate(LocalDate.parse("2027-01-01"));
         dto.setEndDate(LocalDate.parse("2027-02-02"));
         when(bookingRepository.findById(anyLong())).thenReturn(Optional.of(new Booking()));
 
         // When
         // Then
-        assertThrows(WorkSpaceNotFoundException.class, () -> bookingService.updateBooking(dto));
+        assertThrows(WorkSpaceNotFoundException.class, () -> bookingService.updateBooking(22L, dto));
     }
 
     @Test
