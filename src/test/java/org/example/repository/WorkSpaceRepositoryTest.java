@@ -1,9 +1,8 @@
-package org.example.repository.impl;
+package org.example.repository;
 
 import jakarta.transaction.Transactional;
 import org.example.model.entity.WorkSpace;
 import org.example.model.enums.WorkSpaceType;
-import org.example.repository.WorkSpaceRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.params.ParameterizedTest;
