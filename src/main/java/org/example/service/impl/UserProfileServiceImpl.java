@@ -28,4 +28,9 @@ public class UserProfileServiceImpl implements UserProfileService {
         return repository.save(userProfile);
     }
 
+    @Override
+    public boolean existsByUsername(String username) {
+        return repository.findByUsername(username).isPresent();
+    }
+
 }
