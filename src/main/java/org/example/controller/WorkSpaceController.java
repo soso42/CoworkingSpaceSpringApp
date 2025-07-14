@@ -23,7 +23,7 @@ public class WorkSpaceController {
     private final WorkSpaceService workSpaceService;
 
 
-    @PostMapping("")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public WorkSpaceDTO createWorkSpace(@Validated WorkSpaceCreateDTO dto) {
         return workSpaceService.saveWorkSpaceAndGetDto(dto);
@@ -38,7 +38,7 @@ public class WorkSpaceController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<WorkSpaceDTO> findAll() {
         return workSpaceService.findAll();

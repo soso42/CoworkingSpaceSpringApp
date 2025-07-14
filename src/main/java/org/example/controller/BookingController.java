@@ -25,7 +25,7 @@ public class BookingController {
     private final BookingService bookingService;
 
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?> createBooking(@RequestBody @Validated BookingCreationDTO dto) {
         try {
             bookingService.book(dto);
@@ -37,7 +37,7 @@ public class BookingController {
         }
     }
 
-    @GetMapping("")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<BookingDTO> getAllBookings() {
         return bookingService.findAllDTO();
