@@ -1,68 +1,55 @@
 package org.example.controller;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.example.model.dto.BookingCreationDTO;
-import org.example.model.entity.Booking;
-import org.example.model.exceptions.BookingNotAvailableException;
-import org.example.model.exceptions.BookingNotFoundException;
-import org.example.model.exceptions.WorkSpaceNotFoundException;
-import org.example.service.BookingService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.example.model.dto.user.AuthRequestDTO;
+import org.example.model.dto.user.UserProfileCreateDTO;
+import org.example.security.jwt.JwtUtil;
+import org.example.service.UserProfileService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Map;
 
-@Controller
-@RequestMapping("/user")
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
 
-    private final BookingService bookingService;
+    private final AuthenticationManager authenticationManager;
+    private final UserProfileService userProfileService;
 
 
-    @GetMapping("/")
-    public String user() {
-        return "user";
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @Validated AuthRequestDTO dto) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
+        );
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String token = JwtUtil.generateToken(userDetails.getUsername(), userDetails.getAuthorities().toString());
+
+        return new ResponseEntity<>(Map.of("token", token), HttpStatus.OK);
     }
 
-    @PostMapping("/make-booking")
-    public String makeBooking(@ModelAttribute @Valid BookingCreationDTO dto, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("error", result.getAllErrors());
-            return "error";
-        }
-        try {
-            bookingService.book(dto);
-        } catch (WorkSpaceNotFoundException e) {
-            model.addAttribute("error", "WorkSpace with the id " + dto.getWorkSpaceId() + " does not exist");
-            return "error";
-        } catch (BookingNotAvailableException e) {
-            model.addAttribute("error", "Booking with the chosen dates is not available");
-            return "error";
-        }
-        return "redirect:/user/";
-    }
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUp(@RequestBody @Validated UserProfileCreateDTO dto) {
 
-    @PostMapping("/cancel-booking")
-    public String cancelBooking(@RequestParam("id") @NotNull Long id, Model model) {
-        try {
-            bookingService.cancelBooking(id);
-        } catch (BookingNotFoundException e) {
-            model.addAttribute("error", "Booking not found");
-            return "error";
+        if (userProfileService.existsByUsername(dto.getUsername())) {
+            return new ResponseEntity<>(Map.of("message", "Username is already in use"), HttpStatus.BAD_REQUEST);
         }
-        return "redirect:/user/";
-    }
 
-    @GetMapping("/all-bookings")
-    public String viewAllBookings(Model model) {
-        List<Booking> bookings = bookingService.findAll();
-        model.addAttribute("bookings", bookings);
-        return "bookings";
+        userProfileService.save(dto);
+
+        return ResponseEntity.ok().build();
     }
 
 }

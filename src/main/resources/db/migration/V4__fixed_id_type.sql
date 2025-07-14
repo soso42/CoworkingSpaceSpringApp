@@ -1,0 +1,3 @@
+
+ALTER TABLE usr
+ALTER COLUMN    id             TYPE BIGINT;
