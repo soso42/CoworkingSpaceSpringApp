@@ -37,7 +37,7 @@ public class SecurityConfig {
 
                         .requestMatchers(USER_ENDPOINTS).hasAnyAuthority("ADMIN", "USER")
 
-                        .anyRequest().permitAll()
+                        .anyRequest().denyAll()
 
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

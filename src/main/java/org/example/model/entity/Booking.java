@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Builder
 public class Booking {
 
     @Id
@@ -28,5 +27,39 @@ public class Booking {
 
     @Column(name = "end_date")
     private LocalDate endDate;
+
+
+    public static BookingBuilder builder() {
+        return new BookingBuilder();
+    }
+
+    public static class BookingBuilder {
+
+        Booking booking = new Booking();
+
+        public BookingBuilder id(Long id) {
+            booking.id = id;
+            return this;
+        }
+
+        public BookingBuilder workSpace(WorkSpace workSpace) {
+            booking.workSpace = workSpace;
+            return this;
+        }
+
+        public BookingBuilder startDate(LocalDate startDate) {
+            booking.startDate = startDate;
+            return this;
+        }
+
+        public BookingBuilder endDate(LocalDate endDate) {
+            booking.endDate = endDate;
+            return this;
+        }
+
+        public Booking build() {
+            return booking;
+        }
+    }
 
 }
