@@ -23,6 +23,10 @@ public class SecurityConfig {
             "/bookings",
             "/bookings/**"
     };
+    private static final String[] OPEN_ENDPOINTS = {
+            "/users/login",
+            "/users/signup"
+    };
 
     private final JwtFilter jwtFilter;
 
@@ -36,6 +40,8 @@ public class SecurityConfig {
                         .requestMatchers(ADMIN_ENDPOINTS).hasAuthority("ADMIN")
 
                         .requestMatchers(USER_ENDPOINTS).hasAnyAuthority("ADMIN", "USER")
+
+                        .requestMatchers(OPEN_ENDPOINTS).permitAll()
 
                         .anyRequest().denyAll()
 
