@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,7 +36,9 @@ public class UserController {
                 new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
         );
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String token = JwtUtil.generateToken(userDetails.getUsername(), userDetails.getAuthorities().toString());
+        String username = userDetails.getUsername();
+        String role = ((List) userDetails.getAuthorities()).getFirst().toString();
+        String token = JwtUtil.generateToken(username, role);
 
         return new ResponseEntity<>(Map.of("token", token), HttpStatus.OK);
     }
