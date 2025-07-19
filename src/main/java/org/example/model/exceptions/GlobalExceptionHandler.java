@@ -24,4 +24,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(WorkSpaceNotFoundException.class)
+    public ResponseEntity<?> handleWorkSpaceNotFoundException(WorkSpaceNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
 }
